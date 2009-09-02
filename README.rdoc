@@ -1,0 +1,17 @@
+= Handler
+
+Handler is a very simple plugin that generates handles (URL-friendly names) for ActiveRecord models based on a given attribute or method. For example, in your model:
+
+  handle_based_on :title
+
+creates a generate_handle method which returns a URL-acceptable version of the title attribute. By default the word separator is "_" but you can change this with, for example:
+
+  handle_based_on :title, :separator => "-"
+
+
+== To-do List
+
+* optionally auto-assign handle via +before_validation+ hook
+
+
+Copyright (c) 2009 Alex Reisner, released under the MIT license
