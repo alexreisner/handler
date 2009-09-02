@@ -12,6 +12,7 @@ creates a generate_handle method which returns a URL-acceptable version of the t
 == To-do List
 
 * optionally auto-assign handle via +before_validation+ hook
+* optionally ensure that handle is unique (auto-append number)
 
 
 Copyright (c) 2009 Alex Reisner, released under the MIT license
