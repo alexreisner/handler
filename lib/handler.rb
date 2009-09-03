@@ -25,12 +25,15 @@ module Handler
 	    # Generate a URL-friendly name.
 	    #
       define_method :generate_handle do
-        str = send(attribute)
         return nil unless str.is_a?(String)
-        str = str.downcase.strip.gsub('&', ' and ') # add space for, e.g., "Y&T"
-        str = str.delete('.\'"') # no space
-        str = str.gsub(/\W/, ' ') # space
-        str.gsub(/ +/, options[:separator])
+        returning send(attribute) do |str|
+          str.downcase!
+          str.strip!
+          str.gsub!('&', ' and ') # add space for, e.g., "Y&T"
+          str.delete!('.\'"')     # no space
+          str.gsub!(/\W/, ' ')    # space
+          str.gsub!(/ +/, options[:separator])
+        end
       end
       
       ##
