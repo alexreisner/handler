@@ -2,13 +2,15 @@ require 'test_helper'
 
 class HandlerTest < ActiveSupport::TestCase
 
-#  test "transliteration" do
-#    unless RUBY_VERSION >= "1.9"
-#      a = Band.new
-#      a.name = "Häagen Dazs"
-#      assert_equal "haagen_dazs", a.generate_handle
-#    end
-#  end
+  test "transliteration" do
+    a = Band.new
+    a.name = "Häagen Dazs"
+    possibilities = [
+      "haagen_dazs", # output of unidecode or normalization
+      "hagen_dazs",  # output of iconv
+    ]
+    assert possibilities.include?(a.generate_handle)
+  end
 
   test "custom separator" do
     a = Person.new
