@@ -48,6 +48,17 @@ module Handler
   end
   
   ##
+  # Get the next handle in the sequence (for avoiding duplicates).
+  #
+  def self.next_handle(handle, separator)
+    if handle =~ /#{separator}\d+$/
+      handle.sub(/\d+$/){ |i| i.to_i + 1 }
+    else
+      handle + separator + "2"
+    end
+  end
+  
+  ##
   # Transliterate a string using multibyte normalization,
   # then remove remaining non-ASCII characters. Taken from
   # <tt>ActiveSupport::Inflector.transliterate</tt>.

@@ -43,6 +43,12 @@ class HandlerTest < ActiveSupport::TestCase
       assert_equal t, b.generate_handle
     end
   end
+  
+  test "next handle" do
+    assert_equal "banana-boat-2",  Handler.next_handle("banana-boat",    "-")
+    assert_equal "banana-boat-3",  Handler.next_handle("banana-boat-2",  "-")
+    assert_equal "banana-boat-12", Handler.next_handle("banana-boat-11", "-")
+  end
 end
 
 
