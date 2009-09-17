@@ -59,42 +59,36 @@ class HandlerTest < ActiveSupport::TestCase
   end
 end
 
-
-class Band
+class ActiveRecordSimulator
   include Handler
   attr_accessor :name
+  
+  # simulate id method
+  def id; 123; end
+
+  # simulate ActiveRecord::Base.all method;
+  # needed for testing whether records exist with a given handle
+  def self.all(options)
+    @existing_handles.include?(options[:conditions][1]) ? [nil, nil] : []
+  end
+end
+
+class Band < ActiveRecordSimulator
   handle_based_on :name
-  
-  # simulate id method
-  def id; 123; end
-  
-  # simulate ActiveRecord::Base.all method
-  def self.all(options)
-    bands = ["the_residents", "bing_crosby"]
-    bands.include?(options[:conditions][1]) ? [nil, nil] : []
-  end
+  @existing_handles = [
+    "the_residents",
+    "bing_crosby"
+  ]
 end
 
-
-class Person
-  include Handler
-  attr_accessor :name
+class Person < ActiveRecordSimulator
   handle_based_on :name, :separator => "-"
-  
-  # simulate id method
-  def id; 123; end
-  
-  # simulate ActiveRecord::Base.exists? method
-  def self.all(options)
-    people = [
-      "van-dyke-parks",
-      "captain-beefheart",
-      "abe-lincoln",
-      "abe-lincoln-2",
-      "abe-lincoln-3"
-    ]
-    people.include?(options[:conditions][1]) ? [nil, nil] : []
-  end
+  @existing_handles = [
+    "van-dyke-parks",
+    "captain-beefheart",
+    "abe-lincoln",
+    "abe-lincoln-2",
+    "abe-lincoln-3"
+  ]
 end
-
 
