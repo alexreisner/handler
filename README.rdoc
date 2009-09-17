@@ -18,12 +18,21 @@ By default the word separator is "_" but you can change this with the <tt>:separ
 
   handle_based_on :title, :separator => "-"
 
-Transliteration (using reasonable ASCII approximations non-ASCII characters) is attempted, using the excellent unidecode gem (http://rubyforge.org/projects/unidecode) if it's available.  
+Transliteration using reasonable ASCII approximations of non-ASCII characters is attempted, using the excellent unidecode gem (http://rubyforge.org/projects/unidecode) if it's available (recommended: <tt>sudo gem install unidecode</tt>).
 
+Usually you want handles to be unique but if they're generated automatically you can't very well use ActiveRecord validation. Instead Handler will append numbers (starting with 2) to duplicate handles, so if you already have a Person with handle <tt>george_brett</tt>, a new Person with name "George Brett" will receive the handle <tt>george_brett_2</tt>. To disable this feature (and allow duplicate handles):
 
-== To-do List
+  handle_based_on :name, :unique => false
 
-* optionally auto-assign handle via +before_validation+ hook
+Handler doesn't store handles automatically, but provides a private method <tt>assign_handle</tt> you can call to do so. Intended use is something like this:
+
+  before_save :assign_handle
+
+By default the handle is written to the <tt>handle</tt> attribute but you can change this like so:
+
+  handle_based_on :name, :write_to => :alias
+
+The above will store the handle as the <tt>alias</tt> attribute.
 
 
 Copyright (c) 2009 Alex Reisner, released under the MIT license
