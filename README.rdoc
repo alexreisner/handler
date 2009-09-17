@@ -4,15 +4,12 @@ Handler is a Rails plugin that generates handles (filesystem- and URL-friendly n
 
   handle_based_on :title
 
-creates a generate_handle method which returns a filesystem-acceptable version of the title attribute, for example:
+creates a generate_handle method which returns a lowercase ASCII version of the title attribute, for example:
 
-  ".38 Special"                 --> "38_special"
-  "Guns N' Roses"               --> "guns_n_roses"
-  "The Rossington-Collins Band" --> "the_rossington_collins_band"
-  "Y&T"                         --> "y_and_t"
-  "Huey Lewis & the News"       --> "huey_lewis_and_the_news"
-  "Emerson, Lake & Palmer"      --> "emerson_lake_and_palmer"
-  "Häagen Dazs"                 --> "haagen_dazs"
+  "Häagen Dazs"             --> "haagen_dazs"
+  ".38 Special"             --> "38_special"
+  "Guns N' Roses"           --> "guns_n_roses"
+  "Emerson, Lake & Palmer"  --> "emerson_lake_and_palmer"
 
 By default the word separator is "_" but you can change this with the <tt>:separator</tt> option, for example:
 
