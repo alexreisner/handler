@@ -104,7 +104,10 @@ module Handler
       define_method :generate_handle do
         h = Handler.generate_handle(send(attribute), options[:separator])
         if options[:unique]
-          while self.class.exists?(options[:write_to] => h)
+          
+          # increase number while *other* records exist with the same handle
+          # (record might be saved and should keep its handle)
+          while self.class.all(:conditions => ["#{options[:write_to]} = ? AND id != ?", h, id]).size > 0
             h = Handler.next_handle(h, options[:separator])
           end
         end

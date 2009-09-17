@@ -65,10 +65,13 @@ class Band
   attr_accessor :name
   handle_based_on :name
   
-  # simulate ActiveRecord::Base.exists? method
-  def self.exists?(options)
+  # simulate id method
+  def id; 123; end
+  
+  # simulate ActiveRecord::Base.all method
+  def self.all(options)
     bands = ["the_residents", "bing_crosby"]
-    bands.include?(options[:handle])
+    bands.include?(options[:conditions][1]) ? [nil, nil] : []
   end
 end
 
@@ -78,16 +81,19 @@ class Person
   attr_accessor :name
   handle_based_on :name, :separator => "-"
   
+  # simulate id method
+  def id; 123; end
+  
   # simulate ActiveRecord::Base.exists? method
-  def self.exists?(options)
-    bands = [
+  def self.all(options)
+    people = [
       "van-dyke-parks",
       "captain-beefheart",
       "abe-lincoln",
       "abe-lincoln-2",
       "abe-lincoln-3"
     ]
-    bands.include?(options[:handle])
+    people.include?(options[:conditions][1]) ? [nil, nil] : []
   end
 end
 
