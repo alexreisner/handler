@@ -45,9 +45,17 @@ class HandlerTest < ActiveSupport::TestCase
   end
   
   test "next handle" do
-    assert_equal "banana-boat-2",  Handler.next_handle("banana-boat",    "-")
+    assert_equal "banana_boat_2",  Handler.next_handle("banana_boat",    "_")
     assert_equal "banana-boat-3",  Handler.next_handle("banana-boat-2",  "-")
     assert_equal "banana-boat-12", Handler.next_handle("banana-boat-11", "-")
+  end
+  
+  test "unique handle generation" do
+    p = Person.new
+    p.name = "Captain Beefheart"
+    assert_equal "captain-beefheart-2", p.generate_handle
+    p.name = "Abe Lincoln"
+    assert_equal "abe-lincoln-4", p.generate_handle
   end
 end
 
@@ -56,6 +64,12 @@ class Band
   include Handler
   attr_accessor :name
   handle_based_on :name
+  
+  # simulate ActiveRecord::Base.exists? method
+  def self.exists?(options)
+    bands = ["the_residents", "bing_crosby"]
+    bands.include?(options[:handle])
+  end
 end
 
 
@@ -63,6 +77,18 @@ class Person
   include Handler
   attr_accessor :name
   handle_based_on :name, :separator => "-"
+  
+  # simulate ActiveRecord::Base.exists? method
+  def self.exists?(options)
+    bands = [
+      "van-dyke-parks",
+      "captain-beefheart",
+      "abe-lincoln",
+      "abe-lincoln-2",
+      "abe-lincoln-3"
+    ]
+    bands.include?(options[:handle])
+  end
 end
 
 

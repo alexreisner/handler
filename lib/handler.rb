@@ -91,16 +91,24 @@ module Handler
     # 
     # <tt>:separator</tt> - character to place between words
     # <tt>:store</tt> - attribute in which to store handle
+    # <tt>:unique</tt> - generate a handle which is unique among all records
     #
     def handle_based_on(attribute, options = {})
       options[:separator] ||= "_"
       options[:write_to]  ||= :handle
+      options[:unique]      = true if options[:unique].nil?
 
 	    ##
 	    # Generate a URL-friendly name.
 	    #
       define_method :generate_handle do
-        Handler.generate_handle(send(attribute), options[:separator])
+        h = Handler.generate_handle(send(attribute), options[:separator])
+        if options[:unique]
+          while self.class.exists?(options[:write_to] => h)
+            h = Handler.next_handle(h, options[:separator])
+          end
+        end
+        h
       end
       
       ##

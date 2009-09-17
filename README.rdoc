@@ -23,7 +23,6 @@ Transliteration (using reasonable ASCII approximations non-ASCII characters) is 
 
 == To-do List
 
-* optionally ensure that handle is unique (auto-append number)
 * optionally auto-assign handle via +before_validation+ hook
 
 
