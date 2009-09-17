@@ -48,6 +48,22 @@ module Handler
   end
   
   ##
+  # Generate a handle from a string.
+  #
+  def self.generate_handle(title, separator)
+    str = title
+    return nil unless str.is_a?(String)
+    str = transliterate(str).to_s
+    str = str.downcase
+    str = str.strip
+    str = str.gsub('&', ' and ') # add space for, e.g., "Y&T"
+    str = str.delete('.\'"')     # no space
+    str = str.gsub(/\W/, ' ')    # space
+    str = str.gsub(/ +/, separator)
+    str   
+  end
+  
+  ##
   # Get the next handle in the sequence (for avoiding duplicates).
   #
   def self.next_handle(handle, separator)
@@ -84,16 +100,7 @@ module Handler
 	    # Generate a URL-friendly name.
 	    #
       define_method :generate_handle do
-        str = send(attribute)
-        return nil unless str.is_a?(String)
-        str = Handler.transliterate(str).to_s
-        str = str.downcase
-        str = str.strip
-        str = str.gsub('&', ' and ') # add space for, e.g., "Y&T"
-        str = str.delete('.\'"')     # no space
-        str = str.gsub(/\W/, ' ')    # space
-        str = str.gsub(/ +/, options[:separator])
-        str
+        Handler.generate_handle(send(attribute), options[:separator])
       end
       
       ##
