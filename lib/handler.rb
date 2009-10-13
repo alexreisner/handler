@@ -123,3 +123,5 @@ module Handler
     end
   end
 end
+
+ActiveRecord::Base.class_eval{ include Handler }

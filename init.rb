@@ -1,1 +1,1 @@
-ActiveRecord::Base.class_eval{ include Handler }
+require 'handler'
