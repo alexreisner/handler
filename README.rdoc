@@ -1,5 +1,7 @@
 = Handler
 
+<b>Handler is currently compatible with Rails 2.x and Rails 3.</b>
+
 Handler is a Rails plugin that generates handles (filesystem- and URL-friendly names) for ActiveRecord models based on a given attribute or method. For example, in your model:
 
   handle_based_on :title
