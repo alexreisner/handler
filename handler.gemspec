@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alex Reisner"]
-  s.date = %q{2009-10-12}
+  s.date = %q{2009-10-13}
   s.description = %q{Handler is a Rails plugin that generates handles (filesystem- and URL-friendly names) for ActiveRecord models based on a given attribute or method.}
   s.email = %q{alex@alexreisner.com}
   s.extra_rdoc_files = [
@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    "CHANGELOG.rdoc",
+    ".gitignore",
+     "CHANGELOG.rdoc",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
