@@ -105,9 +105,20 @@ module Handler
         h = Handler.generate_handle(send(attribute), options[:separator])
         if options[:unique]
           
+          # generate a condition for finding an existing record with a
+          # given handle
+          find_dupe = lambda{ |h|
+            conds = ["#{options[:write_to]} = ?", h]
+            unless new_record?
+              conds[0] << " AND id != ?"
+              conds << id
+            end
+            conds
+          }
+
           # increase number while *other* records exist with the same handle
           # (record might be saved and should keep its handle)
-          while self.class.all(:conditions => ["#{options[:write_to]} = ? AND id != ?", h, id]).size > 0
+          while self.class.all(:conditions => find_dupe.call(h)).size > 0
             h = Handler.next_handle(h, options[:separator])
           end
         end
