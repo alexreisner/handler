@@ -59,6 +59,7 @@ module Handler
     str = str.gsub('&', ' and ') # add space for, e.g., "Y&T"
     str = str.delete('.\'"')     # no space
     str = str.gsub(/\W/, ' ')    # space
+    str = str.strip
     str = str.gsub(/ +/, separator)
     str
   end
