@@ -48,6 +48,15 @@ module Handler
   end
 
   ##
+  # Transliterate a string using multibyte normalization,
+  # then remove remaining non-ASCII characters. Taken from
+  # <tt>ActiveSupport::Inflector.transliterate</tt>.
+  #
+  def self.transliterate_with_normalization(string)
+    string.mb_chars.normalize.gsub(/[^\x00-\x7F]+/, '').to_s
+  end
+
+  ##
   # Generate a handle from a string.
   #
   def self.generate_handle(title, separator)
@@ -73,15 +82,6 @@ module Handler
     else
       handle + separator + "2"
     end
-  end
-
-  ##
-  # Transliterate a string using multibyte normalization,
-  # then remove remaining non-ASCII characters. Taken from
-  # <tt>ActiveSupport::Inflector.transliterate</tt>.
-  #
-  def self.transliterate_with_normalization(string)
-    string.mb_chars.normalize.gsub(/[^\x00-\x7F]+/, '').to_s
   end
 
   module ClassMethod
