@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'active_support'
 require 'active_support/test_case'
-require 'test/unit'
+require 'minitest/autorun'
 
 # required to avoid errors
 module ActiveRecord

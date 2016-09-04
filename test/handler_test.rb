@@ -24,7 +24,7 @@ class HandlerTest < ActiveSupport::TestCase
       ".38 Special"                 => "38_special",
       "Guns N' Roses"               => "guns_n_roses",
       "The Rossington-Collins Band" => "the_rossington_collins_band"
-      
+
     }.each do |s,t|
       b.name = s
       assert_equal t, b.generate_handle
@@ -37,19 +37,19 @@ class HandlerTest < ActiveSupport::TestCase
       "Y&T"                    => "y_and_t",
       "Huey Lewis & the News"  => "huey_lewis_and_the_news",
       "Emerson, Lake & Palmer" => "emerson_lake_and_palmer"
-      
+
     }.each do |s,t|
       b.name = s
       assert_equal t, b.generate_handle
     end
   end
-  
+
   test "next handle" do
     assert_equal "banana_boat_2",  Handler.next_handle("banana_boat",    "_")
     assert_equal "banana-boat-3",  Handler.next_handle("banana-boat-2",  "-")
     assert_equal "banana-boat-12", Handler.next_handle("banana-boat-11", "-")
   end
-  
+
   test "unique handle generation" do
     p = Person.new
     p.name = "Captain Beefheart"
@@ -62,14 +62,17 @@ end
 class ActiveRecordSimulator
   include Handler
   attr_accessor :name
-  
+
   # simulate id method
   def id; 123; end
 
-  # simulate ActiveRecord::Base.all method;
+  # simulate new_record? method
+  def new_record?; true; end
+
+  # simulate ActiveRecord::Base.where method;
   # needed for testing whether records exist with a given handle
-  def self.all(options)
-    @existing_handles.include?(options[:conditions][1]) ? [nil, nil] : []
+  def self.where(options)
+    @existing_handles.include?(options[1]) ? [nil, nil] : []
   end
 end
 
