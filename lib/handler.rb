@@ -84,7 +84,7 @@ module Handler
     end
   end
 
-  module ClassMethod
+  module ClassMethods
 
     ##
     # Declare that a model generates a handle based on
@@ -119,7 +119,7 @@ module Handler
 
           # increase number while *other* records exist with the same handle
           # (record might be saved and should keep its handle)
-          while self.class.all(:conditions => find_dupe.call(h)).size > 0
+          while self.class.where(find_dupe.call(h)).size > 0
             h = Handler.next_handle(h, options[:separator])
           end
         end
